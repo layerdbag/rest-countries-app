@@ -1,0 +1,197 @@
+/* ------------ *\
+  #Colors
+\* ------------ */
+@use 'theme' as *;
+
+.bg-primary-dark {
+  background: $bg-primary-dark;
+}
+
+.bg-primary-light {
+  background: $bg-primary-light;
+}
+
+.color-primary-dark {
+  color: $color-primary-dark;
+}
+
+.color-primary-light {
+  color: $color-primary-light;
+}
+
+.color-secondary-dark {
+  color: $color-secondary-dark;
+}
+
+.color-secondary-light {
+  color: $color-secondary-light;
+}
+
+
+/* ------------ *\
+  #Margins
+\* ------------ */
+
+.gap-top-300 {
+  margin-block-start: $size-300;
+}
+
+.gap-top-400 {
+  margin-block-start: $size-400;
+}
+
+.gap-top-500 {
+  margin-block-start: $size-500;
+}
+
+.gap-top-600 {
+  margin-block-start: $size-600;
+}
+
+.gap-top-700 {
+  margin-block-start: $size-700;
+}
+
+.gap-left-300 {
+  margin-inline-start: $size-300;
+}
+
+.gap-left-400 {
+  margin-inline-start: $size-400;
+}
+
+.gap-left-500 {
+  margin-inline-start: $size-500;
+}
+
+.gap-right-300 {
+  margin-inline-end: $size-300;
+}
+
+.gap-right-400 {
+  margin-inline-end: $size-400;
+}
+
+.gap-right-500 {
+  margin-inline-end: $size-500;
+}
+
+.gap-bottom-400 {
+  margin-block-end: $size-400;
+}
+
+.gap-bottom-500 {
+  margin-block-end: $size-500;
+}
+
+.gap-bottom-600 {
+  margin-block-end: $size-600;
+}
+
+
+/* ------------ *\
+  #Paddings
+\* ------------ */
+
+.pad-300 {
+  padding-block: $size-300;
+}
+
+.pad-400 {
+  padding-block: $size-400;
+}
+
+.pad-500 {
+  padding-block: $size-500;
+}
+
+.pad-top-300 {
+  padding-block-start: $size-300;
+}
+
+.pad-top-400 {
+  padding-block-start: $size-400;
+}
+
+.pad-top-500 {
+  padding-block-start: $size-500;
+}
+
+.pad-top-600 {
+  padding-block-start: $size-600;
+}
+
+.pad-top-700 {
+  padding-block-start: $size-700;
+}
+
+.pad-bottom-300 {
+  padding-block-end: $size-300;
+}
+
+.pad-bottom-400 {
+  padding-block-end: $size-400;
+}
+
+.pad-bottom-500 {
+  padding-block-end: $size-500;
+}
+
+.pad-bottom-600 {
+  padding-block-end: $size-600;
+}
+
+.pad-bottom-700 {
+  padding-block-end: $size-700;
+}
+
+
+/* ------------ *\
+  #Font-sizes
+\* ------------ */
+
+.text-300 {
+  font-size: $size-300;
+}
+
+.text-400 {
+  font-size: $size-400;
+}
+
+.text-500 {
+  font-size: $size-500;
+}
+
+.text-600 {
+  font-size: $size-600;
+}
+
+.text-700 {
+  font-size: $size-700;
+}
+
+
+/* ------------ *\
+  #Font-weight
+\* ------------ */
+
+.weight-small {
+  font-weight: $weight-small;
+}
+
+.weight-semibold {
+  font-weight: $weight-semibold;
+}
+
+.weight-bold {
+  font-weight: $weight-bold;
+}
+
+
+/* ------------ *\
+  #Font-family
+\* ------------ */
+
+.font-base {
+  font-family: $font-base;
+}

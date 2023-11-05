@@ -1,0 +1,49 @@
+@use '../theme' as *;
+@use '../theme_utils' as *;
+@use '../utilities/radius';
+
+.button {
+  @extend .radius;
+
+  font: inherit;
+  display: inline-block;
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid $color-secondary-light;
+  background: $bg-primary-light;
+  padding: 0.6rem 1.5rem;
+  position: relative;
+
+  //font-weight: $weight-semibold;
+
+  &[data-variant='ghost'] {
+    border-color: currentColor;
+    background: transparent;
+  }
+
+  &[data-variant='toggler'] {
+    border: 0;
+    background: transparent;
+  }
+
+  &:focus {
+    outline-offset: -0.4rem;
+    outline: 1px solid;
+  }
+
+  &:hover {
+    background: $bg-primary-dark;
+    border-color: $color-primary-dark;
+    color: $color-primary-light;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+
+.button {
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,23 @@
+@use '../theme' as *;
+
+.splitter {
+  > :last-child {
+    margin-block-start: $size-700;
+    margin-block-end: $size-500;
+  }
+
+  @media (min-width: $breakpoints-md) {
+    display: flex;
+    justify-content: space-between;
+
+    // >* {
+    //   flex-grow: 1;
+    // }
+
+    > :last-child {
+      margin-block-start: 0;
+      margin-inline-start: $size-500;
+      max-width: 22rem;
+    }
+  }
+}

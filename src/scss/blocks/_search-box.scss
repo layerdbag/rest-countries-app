@@ -1,0 +1,36 @@
+@use '../utilities/radius' as *;
+@use '../theme' as *;
+@use '../theme_utils' as *;
+
+.search-box {
+  @extend .radius;
+
+  display: flex;
+  padding-inline: 2rem;
+  padding-block: $size-400;
+  align-items: center;
+
+  box-shadow: $shadow-light;
+
+  & svg {
+    fill: $color-secondary-light;
+    margin-inline-end: 1rem;
+  }
+
+  & labelFor {
+    inline-size: 100%;
+  }
+
+  & input {
+    inline-size: 100%;
+    border: 0;
+    appearance: none;
+    color: $color-secondary-light;
+    background: inherit;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+}

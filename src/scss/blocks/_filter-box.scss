@@ -1,0 +1,5 @@
+@use '../utilities/radius' as *;
+
+.filter-box {
+  @extend .radius;
+}
