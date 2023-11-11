@@ -1,15 +1,38 @@
+import PropTypes from 'prop-types'
 
-const SearchBar = () => {
+const SearchBar = ({
+  query,
+  handleInputChange,
+  handleSearch
+
+}) => {
+
+
   return (
-    <div>
+    <div className="">
       <div className="search-box">
-        <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512"><path d="M456.69 421.39L362.6 327.3a173.81 173.81 0 0034.84-104.58C397.44 126.38 319.06 48 222.72 48S48 126.38 48 222.72s78.38 174.72 174.72 174.72A173.81 173.81 0 00327.3 362.6l94.09 94.09a25 25 0 0035.3-35.3zM97.92 222.72a124.8 124.8 0 11124.8 124.8 124.95 124.95 0 01-124.8-124.8z"/></svg>
-        <label className='gap-inline-300'>
-          <input placeholder="Search for a country..." />
+        <button type='button' onClick={handleSearch} aria-label='Search'>
+        <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" viewBox="0 0 512 512"><path d="M464 428L339.92 303.9a160.48 160.48 0 0030.72-94.58C370.64 120.37 298.27 48 209.32 48S48 120.37 48 209.32s72.37 161.32 161.32 161.32a160.48 160.48 0 0094.58-30.72L428 464zM209.32 319.69a110.38 110.38 0 11110.37-110.37 110.5 110.5 0 01-110.37 110.37z"/></svg>
+        </button>
+        <label htmlFor='search-input' className='sr-only'>
         </label>
+        <input 
+          type='text'
+          id='search-input'
+          placeholder="Search for a country..." 
+          value={query}
+          onChange={handleInputChange}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+        />
       </div>
       </div>
   )
+}
+
+SearchBar.propTypes = {
+  query: PropTypes.string,
+  handleInputChange: PropTypes.func,
+  handleSearch: PropTypes.func,
 }
 
 
