@@ -27,6 +27,8 @@ const App = () => {
       const response = await axios.get(`${baseUrl}/api/all`)
       if (response) {
         setCountries(response.data)
+      } else {
+        setCountries(data)
       }
     }
     fetchData()
