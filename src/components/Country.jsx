@@ -1,34 +1,100 @@
-import PropTypes from 'prop-types';
+import React from 'react'
+import { useParams, useNavigate } from 'react-router'
+import NavigateButton from './NavigateButton'
+import { FaArrowLeft } from 'react-icons/fa'
+import NotFound from './NotFound'
 
-const Country = ({ country }) => {
-  const { name, capital, flags, region, population } = country;
+
+const Country = ({ countries, isDarkMode }) => {
+  const id = useParams().id
+  const navigate = useNavigate()
+
+  const handleNavigation = () => {
+    navigate('/')
+  }
+
+  const handleBorderNavigation = (borderCountry) => {
+    navigate(`/countries/${borderCountry}`)
+  }
+
+  const country = countries.find(c => c.cca3 === id)
+
+
+
+  if (!country) {
+    return (
+      <NotFound
+        content={id}
+        handleClick={handleNavigation}
+      />
+    )
+  }
+
+
+  const borderCountries = countries.filter(c => country.borders?.includes(c.cca3))
+
+
+  const {
+    name,
+    population,
+    region,
+    subregion,
+    capital,
+    tld,
+    currencies,
+    languages,
+    flags,
+
+  } = country
 
   return (
-    <article className="card">
-      <div className="card-image">
-        <img src={flags.png} alt="flag" />
+    <div className={`container ${isDarkMode ? 'bg-dark' : 'bg-light'}
+    ${isDarkMode ? 'text-font-dark' : 'text-dark-blue'} my-10`}>
+      <div className='py-6 md:py-16 '>
+        <NavigateButton
+          icon={<FaArrowLeft />}
+          text='Back'
+          handleClick={handleNavigation}
+          isDarkMode={isDarkMode}
+        />
       </div>
-      <div className="card-content wrapper">
-        <h2 className="text-500 pad-bottom-300">{name}</h2>
-        <div className="text-300">
-          <p><span className="weight-semibold">Population: </span>{population}</p>
-          <p><span className="weight-semibold">Region: </span>{region}</p>
-          <p><span className="weight-semibold">Capital: </span>{capital}</p>
+      <div className='lg:flex gap-8 pt-6 lg:gap-20'>
+        <div className='border-0 basis-[40%]'>
+          <img src={flags.svg} alt='flag' className='border-0 md:aspect-[3/2] object-cover max-w-full' />
+        </div>
+        <div className='border-0 basis-[40%] py-8'>
+          <h2 className='text-xl font-bold mb-6'>{name.official}</h2>
+          <div className='flex flex-col md:flex-row md:justify-between'>
+            <div className='mb-8'>
+              <p><span className='font-semibold'>Native Name:</span> {name.common}</p>
+              <p><span className='font-semibold'>Population:</span> {population}</p>
+              <p><span className='font-semibold'>Region:</span> {region}</p>
+              <p><span className='font-semibold'>Sub Region:</span> {subregion}</p>
+              <p><span className='font-semibold'>Capital:</span> {capital}</p>
+            </div>
+            <div>
+              <p><span className='font-semibold'>Top Level Domain:</span> {tld}</p>
+              <p><span className='font-semibold'>Currencies:</span> {Object.values(currencies)[0].name}</p>
+              <p><span className='font-semibold'>Languages:</span> {Object.values(languages).join(', ')}</p>
+            </div>
+          </div>
+          <div className='md:flex mt-6'>
+            <p className='font-semibold mb-2 md:mr-4'>Border Countries:</p>
+            <div className='flex flex-wrap gap-1'>
+              {borderCountries.map(c =>
+                <NavigateButton
+                  text={c.name.common}
+                  key={c.cca3}
+                  handleClick={() => handleBorderNavigation(c.cca3)}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </article>
+    </div>
   )
 }
-
-Country.propTypes = {
-  country: PropTypes.object,
-  flags: PropTypes.object,
-  name: PropTypes.string,
-  population: PropTypes.string,
-  region: PropTypes.string,
-  capital: PropTypes.string,
-
-}
-
 
 export default Country

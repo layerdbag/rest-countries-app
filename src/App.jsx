@@ -1,22 +1,54 @@
-import { useState } from "react";
-import { Wrapper } from "./UtilityLibrary"
-//import './App.css'
-import data from '../data.json';
+import { useState, useEffect } from "react";
 import SiteHeader from './components/SiteHeader'
-import SearchAndFilter from "./components/SearchAndFilter";
 import Countries from "./components/Countries";
-//import { nanoid } from "nanoid";
+import {
+  BrowserRouter as Router,
+  Routes, Route
+} from 'react-router'
+import Country from "./components/Country";
+import data from '../data-new.json'
+import axios from 'axios'
 
-const options = [ 'All', 'Africa', 'America', 'Asia', 'Europe', 'Oceania' ]
-const initialCountries = data;
-//const countries = initialCountries;
+const initialCountries = data
+
+const options = ['All', 'Africa', 'America', 'Asia', 'Europe', 'Oceania']
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState(null)
   const [query, setQuery] = useState('')
-  const [countries, setCountries] = useState(initialCountries)
+  const [countries, setCountries] = useState(data)
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
+  const baseUrl = 'https://studies.cs.helsinki.fi/restcountries/'
+  // Loading data into App
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`${baseUrl}/api/all`)
+      if (response) {
+        setCountries(response.data)
+      }
+    }
+    fetchData()
+
+  }, [])
+
+
+
+  // Load theme preference from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark')
+    }
+  }, []);
+
+  // Toggle theme and save preference
+  const toggleTheme = () => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+  }
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
@@ -25,11 +57,12 @@ const App = () => {
   const handleInputChange = ({ target }) => {
     const newQuery = target.value;
     setQuery(newQuery)
-    search(newQuery)
+    searchByName(newQuery)
+    setSelectedOption(null)
   }
 
   const handleSearch = () => {
-    search(query)
+    searchByName(query)
     setSelectedOption(null)
   }
 
@@ -37,11 +70,11 @@ const App = () => {
     setSelectedOption(option)
     setIsOpen(false)
     if (option !== 'All' && option !== null) {
-      filter(option)
+      filterByRegion(option)
     }
 
     if (option === 'All') {
-      filter('')
+      filterByRegion('')
     }
     setQuery('')
   }
@@ -62,40 +95,8 @@ const App = () => {
     }
   }
 
-  // const filterName = (arr, text) => arr.filter(
-  //   item => item.name.toLowerCase().includes(text.toLowerCase())
-  // )
-
-  // const filterRegion = (arr, text) => arr.filter(
-  //   item => item.region.toLowerCase() === text.toLowerCase()
-  // )
-
-  // const toQuery = ''
-
-  // let countriesToShow = query
-  //   ? filterName(countries, query)
-  //   : countries
- 
-
-  // const handleQueries = searchQuery => {
-  //   for (let i = 0; i < options.length; i++) {
-  //     if (searchQuery === options[i]) {
-  //       filterRegion(countries, query)
-  //     }
-  //   }
-
-
-  // }
-
-  const search = (searchQuery) => {
-    const searchCountries = initialCountries.filter(country => 
-      country.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    setCountries(searchCountries)
-  }
-
-  const filter = (searchQuery) => {
-    const searchCountries = initialCountries.filter(country => 
+  const filterByRegion = (searchQuery) => {
+    const searchCountries = initialCountries.filter(country =>
       country.region.toLowerCase().includes(searchQuery.toLowerCase())
     )
     setCountries(searchCountries)
@@ -103,34 +104,51 @@ const App = () => {
 
 
 
+  const searchByName = (searchQuery) => {
+    const searchCountries = initialCountries.filter(country =>
+      country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    setCountries(searchCountries)
+  }
+
+
+
   return (
-    <div>
-      <SiteHeader />
-      <main className="pad-top-300">
-      <Wrapper component="div" className='pad-top-300'>
+    <Router>
+      <div className={`min-h-full ${isDarkMode ? 'bg-dark' : 'bg-light'}`}>
+        <SiteHeader
+          handleClick={toggleTheme}
+          isDarkMode={isDarkMode}
+        />
+        <main className="mx-6 sm:mx-12">
 
-        <div>
-          <SearchAndFilter
-            isOpen={isOpen}
-            selectedOption={selectedOption}
-            query={query}
-            options={options}
-            toggleDropdown={toggleDropdown}
-            handleInputChange={handleInputChange}
-            handleKeyPress={handleKeyPress}
-            handleOptionClick={handleOptionClick}
-            handleOptionKeyDown={handleOptionKeyDown}
-            handleSearch={handleSearch}
-            countries={countries}
-          />
-        </div>
-
-        {countries.length > 0 
-          ? <Countries countries={countries} />
-          : <Wrapper>No matching result</Wrapper>}
-      </Wrapper>
-      </main>
-    </div>
+          <Routes>
+            <Route path='countries/:id' element={<Country
+              countries={initialCountries}
+              isDarkMode={isDarkMode}
+            />
+            }
+            />
+            <Route path='/' element={
+              <Countries
+                countries={countries}
+                isOpen={isOpen}
+                selectedOption={selectedOption}
+                query={query}
+                options={options}
+                toggleDropdown={toggleDropdown}
+                handleInputChange={handleInputChange}
+                handleKeyPress={handleKeyPress}
+                handleOptionClick={handleOptionClick}
+                handleOptionKeyDown={handleOptionKeyDown}
+                handleSearch={handleSearch}
+                isDarkMode={isDarkMode}
+              />
+            } />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   )
 }
 
