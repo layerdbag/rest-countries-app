@@ -125,13 +125,13 @@ const App = () => {
         <main className="mx-6 sm:mx-12">
 
           <Routes>
-            <Route path='countries/:id' element={<Country
+            <Route path='rest-countries-app/countries/:id' element={<Country
               countries={initialCountries}
               isDarkMode={isDarkMode}
             />
             }
             />
-            <Route path='/' element={
+            <Route path='rest-countries-app' element={
               <Countries
                 countries={countries}
                 isOpen={isOpen}

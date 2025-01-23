@@ -23,7 +23,7 @@ const Countries = ({
   const navigate = useNavigate()
 
   const handleCardClick = (countryCode) => {
-    navigate(`/countries/${countryCode}`)
+    navigate(`/rest-countries-app/countries/${countryCode}`)
   }
 
   return (
@@ -55,7 +55,7 @@ const Countries = ({
             className="cursor-pointer transition-all ease-in-out delay-150 hover:-translate-y-1
             hover:scale-[1.01] duration-100
           "  >
-            <Link to={`/countries/${country.cca3}`}>
+            <Link to={`/rest-countries-app/countries/${country.cca3}`}>
               <CountryCard
                 country={country}
                 isDarkMode={isDarkMode}

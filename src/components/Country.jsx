@@ -10,11 +10,11 @@ const Country = ({ countries, isDarkMode }) => {
   const navigate = useNavigate()
 
   const handleNavigation = () => {
-    navigate('/')
+    navigate('/rest-countries-app')
   }
 
   const handleBorderNavigation = (borderCountry) => {
-    navigate(`/countries/${borderCountry}`)
+    navigate(`/rest-countries-app/countries/${borderCountry}`)
   }
 
   const country = countries.find(c => c.cca3 === id)
@@ -50,7 +50,7 @@ const Country = ({ countries, isDarkMode }) => {
   return (
     <div className={`container ${isDarkMode ? 'bg-dark' : 'bg-light'}
     ${isDarkMode ? 'text-font-dark' : 'text-dark-blue'} my-10`}>
-      <div className='py-6 md:py-16 '>
+      <div className='py-6 md:py-12 '>
         <NavigateButton
           icon={<FaArrowLeft />}
           text='Back'
